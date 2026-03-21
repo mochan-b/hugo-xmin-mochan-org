@@ -1,23 +1,19 @@
 <script>
   (function() {
-    // Theme setup
+    // Theme setup - default to light
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       document.documentElement.setAttribute('data-theme', savedTheme);
     } else {
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      } else {
-        document.documentElement.setAttribute('data-theme', 'light');
-      }
+      document.documentElement.setAttribute('data-theme', 'light');
     }
   })();
 </script>
 <script>
-  // Width layout setup (Needs to wait for body to be available, but run ASAP)
+  // Width layout setup - default to constrained
   document.addEventListener('DOMContentLoaded', () => {
       const savedWidth = localStorage.getItem('layoutWidth');
-      if (savedWidth === 'constrained') {
+      if (savedWidth !== 'full') {
           document.body.classList.add('layout-constrained');
       }
   });
