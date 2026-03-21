@@ -1,0 +1,66 @@
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // --- Theme Toggle Logic ---
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+      const iconDark = document.getElementById('theme-icon-dark');
+      const iconLight = document.getElementById('theme-icon-light');
+
+      function updateThemeIcons(theme) {
+        if (theme === 'dark') {
+          iconDark.style.display = 'none';
+          iconLight.style.display = 'block';
+        } else {
+          iconDark.style.display = 'block';
+          iconLight.style.display = 'none';
+        }
+      }
+
+      let currentTheme = document.documentElement.getAttribute('data-theme');
+      if (!currentTheme) {
+        currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      updateThemeIcons(currentTheme);
+
+      themeToggle.addEventListener('click', () => {
+        let theme = document.documentElement.getAttribute('data-theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        const newTheme = theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcons(newTheme);
+      });
+    }
+
+    // --- Width Toggle Logic ---
+    const widthToggle = document.getElementById('width-toggle');
+    if (widthToggle) {
+      const iconFull = document.getElementById('width-icon-full');
+      const iconConstrained = document.getElementById('width-icon-constrained');
+
+      function updateWidthIcons(widthLayout) {
+        if (widthLayout === 'full') {
+          iconFull.style.display = 'none';
+          iconConstrained.style.display = 'block';
+          document.body.classList.remove('layout-constrained');
+        } else {
+          iconFull.style.display = 'block';
+          iconConstrained.style.display = 'none';
+          document.body.classList.add('layout-constrained');
+        }
+      }
+
+      // Initialize based on localStorage, default to full
+      let currentWidth = localStorage.getItem('layoutWidth') || 'full';
+      updateWidthIcons(currentWidth);
+
+      widthToggle.addEventListener('click', () => {
+        currentWidth = currentWidth === 'full' ? 'constrained' : 'full';
+        localStorage.setItem('layoutWidth', currentWidth);
+        updateWidthIcons(currentWidth);
+      });
+    }
+  });
+</script>
