@@ -12,7 +12,9 @@
   {{ range (where $pages "Section" "!=" "") }}
   <li>
     <a href="{{ .RelPermalink }}">{{ .Title | markdownify }}</a>
+    {{ if not $.IsHome }}
     (<span class="date">{{ .Date.Format "2006/01/02" }}</span>)
+    {{ end }}
     <!-- Extract the first line of the post -->
     {{ $firstLine := (index (split .Content "\n") 0) }}
     : {{ $firstLine | plainify | truncate 80 }}
