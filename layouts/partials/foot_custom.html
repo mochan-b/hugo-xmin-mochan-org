@@ -52,8 +52,8 @@
         }
       }
 
-      // Initialize based on localStorage, default to full
-      let currentWidth = localStorage.getItem('layoutWidth') || 'full';
+      // Initialize based on localStorage, default to constrained
+      let currentWidth = localStorage.getItem('layoutWidth') || 'constrained';
       updateWidthIcons(currentWidth);
 
       widthToggle.addEventListener('click', () => {
